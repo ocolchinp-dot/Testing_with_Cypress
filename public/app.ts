@@ -8,7 +8,6 @@ type Product = {
 
 type CartLine = Product & { quantity: number };
 
-const currency = new Intl.NumberFormat('es-GT', { style: 'currency', currency: 'USD' });
 const state: { products: Product[]; cart: Map<string, CartLine> } = { products: [], cart: new Map() };
 
 const catalog = document.querySelector<HTMLDivElement>('#catalog')!;
@@ -18,7 +17,7 @@ const cartTotal = document.querySelector<HTMLElement>('#cart-total')!;
 const orderStatus = document.querySelector<HTMLDivElement>('#order-status')!;
 
 function money(value: number): string {
-  return currency.format(value);
+  return `$${value.toFixed(2)}`;
 }
 
 function setStatus(kind: 'success' | 'error', title: string, detail: string): void {

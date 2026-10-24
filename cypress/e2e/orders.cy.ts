@@ -48,22 +48,25 @@ describe('Pedidos de cafetería', () => {
 
   it('muestra error HTTP 500 simulado y recupera el pedido al reintentar', () => {
     cy.get('[data-testid="add-product-latte"]').click();
-    cy.intercept('POST', '/api/orders', {
-      times: 1,
-      statusCode: 500,
-      body: { error: 'Fallo simulado del servicio de pedidos.' }
-    }).as('forcedFailure');
+    let shouldFail = true;
+    cy.intercept('POST', '/api/orders', (request) => {
+      if (shouldFail) {
+        shouldFail = false;
+        request.reply({ statusCode: 500, body: { error: 'Fallo simulado del servicio de pedidos.' } });
+      } else {
+        request.continue();
+      }
+    }).as('orderRequest');
 
     cy.get('[data-testid="submit-order"]').click();
-    cy.wait('@forcedFailure').its('response.statusCode').should('eq', 500);
+    cy.wait('@orderRequest').its('response.statusCode').should('eq', 500);
     cy.get('[data-testid="order-error"]')
       .should('be.visible')
       .and('contain', 'No se pudo confirmar el pedido')
       .and('contain', 'Fallo simulado');
 
-    cy.intercept('POST', '/api/orders').as('recoveryOrder');
     cy.get('[data-testid="submit-order"]').click();
-    cy.wait('@recoveryOrder').its('response.statusCode').should('eq', 201);
+    cy.wait('@orderRequest').its('response.statusCode').should('eq', 201);
     cy.get('[data-testid="order-success"]').should('be.visible').and('contain', 'Pedido confirmado');
   });
 });
