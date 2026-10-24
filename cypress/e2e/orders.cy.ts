@@ -11,7 +11,9 @@ describe('Pedidos de cafetería', () => {
     cy.get('[data-testid="add-product-latte"]').click();
     cy.get('[data-testid="increase-latte"]').click();
     cy.get('[data-testid="add-product-muffin"]').click();
+    cy.screenshot('01-catalogo-productos-precios-disponibilidad');
     cy.get('[data-testid="cart-total"]').should('contain', '$9.75');
+    cy.screenshot('02-carrito-total-calculado');
     cy.get('[data-testid="submit-order"]').click();
 
     cy.wait('@createOrder').then(({ request, response }) => {
@@ -24,6 +26,7 @@ describe('Pedidos de cafetería', () => {
     });
 
     cy.get('[data-testid="order-success"]').should('be.visible').and('contain', 'CAF-');
+    cy.screenshot('03-pedido-confirmado-id-total');
     cy.get('[data-testid="order-success"]').invoke('text').then((message) => {
       const orderId = message.match(/CAF-[A-Z0-9-]+/)?.[0];
       expect(orderId, 'ID del pedido').to.match(/^CAF-\d{8}-[A-F0-9]{8}$/);
@@ -43,6 +46,7 @@ describe('Pedidos de cafetería', () => {
     cy.get('[data-testid="order-error"]')
       .should('be.visible')
       .and('contain', 'Agrega al menos un producto');
+    cy.screenshot('04-carrito-vacio-sin-post');
     cy.get('@createOrder.all').should('have.length', 0);
   });
 
@@ -64,10 +68,12 @@ describe('Pedidos de cafetería', () => {
       .should('be.visible')
       .and('contain', 'No se pudo confirmar el pedido')
       .and('contain', 'Fallo simulado');
+    cy.screenshot('05-error-api-500-controlado');
 
     cy.get('[data-testid="submit-order"]').click();
     cy.wait('@orderRequest').its('response.statusCode').should('eq', 201);
     cy.get('[data-testid="order-success"]').should('be.visible').and('contain', 'Pedido confirmado');
+    cy.screenshot('06-recuperacion-pedido-exitosa');
   });
 });
 
