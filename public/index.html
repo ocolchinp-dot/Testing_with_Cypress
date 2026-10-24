@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Café Central | Pedidos</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand-mark">CC</div>
+      <div>
+        <p class="eyebrow">Café Central</p>
+        <h1>Tu pausa, bien preparada.</h1>
+      </div>
+      <button id="reset-demo" class="ghost-button" data-testid="reset-demo" type="button">Reiniciar datos de prueba</button>
+    </header>
+
+    <main class="layout">
+      <section class="catalog-section" aria-labelledby="catalog-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Menú del día</p>
+            <h2 id="catalog-title">Elige algo rico</h2>
+          </div>
+          <span class="availability-note">Entrega en 15–20 min</span>
+        </div>
+        <div id="catalog" class="catalog-grid" data-testid="catalog"></div>
+      </section>
+
+      <aside class="cart-panel" aria-labelledby="cart-title">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">Tu selección</p>
+            <h2 id="cart-title">Carrito</h2>
+          </div>
+          <span id="cart-count" class="cart-count" data-testid="cart-count">0</span>
+        </div>
+        <div id="cart-items" class="cart-items" data-testid="cart-items"></div>
+        <div class="cart-summary">
+          <div class="summary-row"><span>Total</span><strong id="cart-total" data-testid="cart-total">$0.00</strong></div>
+          <button id="submit-order" class="primary-button" data-testid="submit-order" type="button">Confirmar pedido</button>
+          <p class="helper-text">Puedes ajustar las cantidades antes de confirmar.</p>
+        </div>
+        <div id="order-status" class="status-area" aria-live="polite"></div>
+      </aside>
+    </main>
+    <script type="module" src="/build/app.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,29 @@
+{
+  "name": "cafeteria-pedidos-cypress",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sistema de pedidos para cafetería con TypeScript, Express, SQLite y Cypress",
+  "scripts": {
+    "build": "npm run build:server && npm run build:frontend",
+    "build:server": "tsc -p tsconfig.server.json",
+    "build:frontend": "tsc -p tsconfig.frontend.json",
+    "start": "node dist/server.js",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:e2e": "npm run build && start-server-and-test start http://localhost:3000 cy:run"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "cypress": "^16.2.0",
+    "start-server-and-test": "^2.0.9",
+    "typescript": "^5.7.2",
+    "wait-on": "^8.0.1"
+  }
+}
+

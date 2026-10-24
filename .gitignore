@@ -1,0 +1,8 @@
+node_modules/
+dist/
+public/build/
+data/*.sqlite
+cypress/screenshots/
+cypress/videos/
+*.log
+
